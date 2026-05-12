@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Commerce Analytics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #fff;
+        color: #1a1a1a;
+        font-family: "IBM Plex Sans", sans-serif;
+        line-height: 1.6;
+      }
+      a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .container {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      header {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+      }
+      .header-inner {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header-logo {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+      .header-links {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.85rem;
+      }
+      .hero {
+        padding: 5rem 0 3.5rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .hero-eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.75rem;
+        color: #6b7280;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+      }
+      h1 {
+        font-size: 2.4rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin-bottom: 1.2rem;
+      }
+      .hero-desc {
+        font-size: 1rem;
+        color: #4b5563;
+        max-width: 540px;
+        margin-bottom: 2rem;
+        font-weight: 300;
+      }
+      .stack-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 2.5rem;
+      }
+      .chip {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 3px;
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+      }
+      .btn-row {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.15s;
+      }
+      .btn-primary {
+        background: #1a1a1a;
+        color: #fff;
+        border: 1px solid #1a1a1a;
+      }
+      .btn-primary:hover {
+        background: #333;
+        text-decoration: none;
+      }
+      .btn-outline {
+        background: #fff;
+        color: #1a1a1a;
+        border: 1px solid #d1d5db;
+      }
+      .btn-outline:hover {
+        border-color: #1a1a1a;
+        text-decoration: none;
+      }
+      .metrics {
+        padding: 3rem 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+      .metric-val {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1.6rem;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        color: #6b7280;
+      }
+      .section {
+        padding: 3.5rem 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.01em;
+      }
+      .section-sub {
+        font-size: 0.88rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+      }
+      .arch-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .arch-step {
+        padding: 1.2rem;
+        border-right: 1px solid #e5e7eb;
+      }
+      .arch-step:last-child {
+        border-right: none;
+      }
+      .arch-step-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.65rem;
+        color: #9ca3af;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+      }
+      .arch-step-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+      }
+      .arch-step-desc {
+        font-size: 0.78rem;
+        color: #6b7280;
+        line-height: 1.5;
+      }
+      .dash-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+      .dash-img {
+        width: 100%;
+        height: 100%;
+        /* 方案 B: 改为 contain，确保图片不被裁剪 */
+        object-fit: contain;
+        /* 如果希望图片上方对齐，可以使用下面这行 */
+        object-position: center;
+      }
+      .dash-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      }
+
+      /*       .dash-img {
+        width: 100%;
+        height: 240px;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        text-align: center;
+        border-bottom: 1px solid #e5e7eb;
+        overflow: hidden;
+      }
+      .dash-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      } */
+      .dash-body {
+        padding: 1.2rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .dash-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+      .dash-desc {
+        font-size: 0.82rem;
+        color: #4b5563;
+        line-height: 1.6;
+      }
+      .dash-tag {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 2px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .tag-powerbi {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
+      .tag-tableau {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+      }
+      .findings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .finding {
+        padding: 1.2rem 1.5rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        border-left: 3px solid;
+      }
+      .finding.f1 {
+        border-left-color: #2563eb;
+      }
+      .finding.f2 {
+        border-left-color: #16a34a;
+      }
+      .finding.f3 {
+        border-left-color: #d97706;
+      }
+      .finding.f4 {
+        border-left-color: #dc2626;
+      }
+      .finding-num {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1.4rem;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      .f1 .finding-num {
+        color: #2563eb;
+      }
+      .f2 .finding-num {
+        color: #16a34a;
+      }
+      .f3 .finding-num {
+        color: #d97706;
+      }
+      .f4 .finding-num {
+        color: #dc2626;
+      }
+      .finding-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+      .finding-desc {
+        font-size: 0.8rem;
+        color: #6b7280;
+        line-height: 1.5;
+      }
+      .ai-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        padding: 1.8rem;
+      }
+      .ai-eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        color: #6b7280;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+      .ai-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.7rem;
+      }
+      .ai-desc {
+        font-size: 0.82rem;
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      .bar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .bar-item-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        color: #374151;
+        margin-bottom: 0.25rem;
+      }
+      .bar-track {
+        height: 5px;
+        background: #e5e7eb;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        border-radius: 3px;
+      }
+      footer {
+        padding: 2rem 0;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #9ca3af;
+        font-family: "IBM Plex Mono", monospace;
+      }
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .arch-row {
+          grid-template-columns: 1fr;
+        }
+        .arch-step {
+          border-right: none;
+          border-bottom: 1px solid #e5e7eb;
+        }
+        .findings-grid {
+          grid-template-columns: 1fr;
+        }
+        .ai-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <span class="header-logo">ecommerce-analytics</span>
+        <div class="header-links">
+          <a
+            href="https://public.tableau.com/app/profile/jo.f5042/viz/eCommerceAnalysis_17784694679280/OlistE-CommerceAnalytics"
+            target="_blank"
+            >Live Dashboard</a
+          >
+          <a
+            href="https://github.com/jfan4926/E-Commerce-Analytics/tree/main"
+            target="_blank"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="hero">
+        <p class="hero-eyebrow">Personal Project · Data Analytics</p>
+        <h1>E-Commerce Analytics<br />Platform</h1>
+        <p class="hero-desc">
+          End-to-end analytics pipeline on 100K+ real orders from Brazil's
+          largest e-commerce platform — cloud data warehouse, interactive
+          dashboards, and AI-powered review classification.
+        </p>
+        <div class="stack-row">
+          <span class="chip">Python</span>
+          <span class="chip">Azure Blob Storage</span>
+          <span class="chip">Azure SQL</span>
+          <span class="chip">Star Schema</span>
+          <span class="chip">Power BI</span>
+          <span class="chip">DAX</span>
+          <span class="chip">Tableau Public</span>
+          <span class="chip">Claude API</span>
+          <span class="chip">SQLAlchemy</span>
+          <span class="chip">Pandas</span>
+        </div>
+        <div class="btn-row">
+          <a
+            href="https://public.tableau.com/app/profile/jo.f5042/viz/eCommerceAnalysis_17784694679280/OlistE-CommerceAnalytics"
+            target="_blank"
+            class="btn btn-primary"
+            >View Live Dashboard</a
+          >
+          <a
+            href="https://github.com/jfan4926/E-Commerce-Analytics/tree/main"
+            target="_blank"
+            class="btn btn-outline"
+            >GitHub Repo</a
+          >
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metrics-grid">
+          <div>
+            <span class="metric-val">$15.4M</span
+            ><span class="metric-label">Total GMV</span>
+          </div>
+          <div>
+            <span class="metric-val">96.5K</span
+            ><span class="metric-label">Orders Analyzed</span>
+          </div>
+          <div>
+            <span class="metric-val">4,556</span
+            ><span class="metric-label">Reviews via AI</span>
+          </div>
+          <div>
+            <span class="metric-val">7.57%</span
+            ><span class="metric-label">Delay Rate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Architecture</div>
+        <div class="section-sub">
+          Medallion pattern — raw ingestion through to BI-ready Star Schema on
+          Azure.
+        </div>
+        <div class="arch-row">
+          <div class="arch-step">
+            <div class="arch-step-label">Raw Layer</div>
+            <div class="arch-step-title">Azure Blob Storage</div>
+            <div class="arch-step-desc">
+              9 CSV tables from Kaggle ingested as data lake foundation
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-label">Transform</div>
+            <div class="arch-step-title">Python / Pandas</div>
+            <div class="arch-step-desc">
+              Cleaning, feature engineering, Star Schema modeling
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-label">Warehouse</div>
+            <div class="arch-step-title">Azure SQL Database</div>
+            <div class="arch-step-desc">
+              1 fact table + 4 dimension tables via SQLAlchemy
+            </div>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-label">Presentation</div>
+            <div class="arch-step-title">Power BI + Tableau</div>
+            <div class="arch-step-desc">
+              Interactive dashboards with DAX measures
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dashboards</div>
+        <div class="section-sub">
+          Three pages, each answering a distinct business question.
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-img">
+            <img
+              src="powerbi_page1.png"
+              alt="Executive Overview"
+              onerror="this.parentElement.innerHTML = '[ powerbi_page1.png ]'"
+            />
+          </div>
+          <div class="dash-body">
+            <div>
+              <div class="dash-title">Executive Overview</div>
+              <div class="dash-desc">
+                $15.42M GMV, 96K orders, monthly trend showing 2017 5x growth
+                and a $1.55M Black Friday peak. Top 10 categories by GMV and
+                review score side by side.
+              </div>
+            </div>
+            <span class="dash-tag tag-powerbi">Power BI</span>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-img">
+            <img
+              src="powerbi_page2.png"
+              alt="Delivery & Satisfaction"
+              onerror="this.parentElement.innerHTML = '[ powerbi_page2.png ]'"
+            />
+          </div>
+          <div class="dash-body">
+            <div>
+              <div class="dash-title">Delivery &amp; Satisfaction</div>
+              <div class="dash-desc">
+                Orders delayed 3+ days see 1-star rates jump from 19% to 54%.
+                Northern states (RR, AP, AM) average 25+ days vs the 12-day
+                national average.
+              </div>
+            </div>
+            <span class="dash-tag tag-powerbi">Power BI</span>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-img">
+            <img
+              src="powerbi_page3.png"
+              alt="AI Insights"
+              onerror="this.parentElement.innerHTML = '[ powerbi_page3.png ]'"
+            />
+          </div>
+          <div class="dash-body">
+            <div>
+              <div class="dash-title">AI-Powered Insights</div>
+              <div class="dash-desc">
+                Claude API classifies 4,556 Portuguese reviews. Wrong/missing
+                items (37%) surpass delivery delays as the top complaint — only
+                discoverable through text analysis.
+              </div>
+            </div>
+            <span class="dash-tag tag-powerbi">Power BI</span>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-img">
+            <img
+              src="tableau.png"
+              alt="Tableau Dashboard"
+              onerror="this.parentElement.innerHTML = '[ tableau.png ]'"
+            />
+          </div>
+          <div class="dash-body">
+            <div>
+              <div class="dash-title">Geospatial &amp; AI Analytics</div>
+              <div class="dash-desc">
+                Filled map of customer satisfaction across all 27 Brazilian
+                states, complaint distribution, and sentiment intensity.
+                <a href="YOUR_TABLEAU_LINK_HERE" target="_blank"
+                  ><br />View live</a
+                >
+              </div>
+            </div>
+            <span class="dash-tag tag-tableau">Tableau Public</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Key Findings</div>
+        <div class="section-sub">
+          Data-driven conclusions with direct business implications.
+        </div>
+        <div class="findings-grid">
+          <div class="finding f1">
+            <span class="finding-num">3 days</span>
+            <div class="finding-title">Critical Delay Threshold</div>
+            <div class="finding-desc">
+              1-star rates jump from 19% to 54% once orders cross 3 days late —
+              making early intervention the highest-leverage action.
+            </div>
+          </div>
+          <div class="finding f2">
+            <span class="finding-num">37%</span>
+            <div class="finding-title">Wrong Items = #1 Complaint</div>
+            <div class="finding-desc">
+              AI text analysis revealed fulfillment errors outrank delivery
+              delays — invisible without NLP on customer reviews.
+            </div>
+          </div>
+          <div class="finding f3">
+            <span class="finding-num">93.8%</span>
+            <div class="finding-title">Seller Fault Rate</div>
+            <div class="finding-desc">
+              Almost all 1-star reviews trace back to seller-side issues,
+              pointing to a seller quality management opportunity.
+            </div>
+          </div>
+          <div class="finding f4">
+            <span class="finding-num">29 days</span>
+            <div class="finding-title">Northern State Gap</div>
+            <div class="finding-desc">
+              State RR averages 29-day delivery vs the 12-day national average —
+              a 2.4x regional disparity in logistics performance.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">AI Stack</div>
+        <div class="section-sub">
+          Claude API for multilingual review classification at scale.
+        </div>
+        <div class="ai-grid">
+          <div>
+            <div class="ai-eyebrow">Powered by Anthropic</div>
+            <div class="ai-title">Multilingual Review Classification</div>
+            <div class="ai-desc">
+              4,556 Portuguese reviews passed through claude-haiku with
+              structured JSON prompts, returning complaint category, sentiment
+              intensity (1-5), English summary, and seller fault attribution per
+              review.
+            </div>
+            <div class="stack-row">
+              <span class="chip">claude-haiku-4-5</span>
+              <span class="chip">Structured JSON</span>
+              <span class="chip">Portuguese NLP</span>
+            </div>
+          </div>
+          <div class="bar-list">
+            <div>
+              <div class="bar-item-label">
+                <span>Wrong / Missing Item</span><span>36.7%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 73%; background: #2563eb"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="bar-item-label">
+                <span>Delivery Delay</span><span>33.3%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 66%; background: #16a34a"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="bar-item-label">
+                <span>Product Quality</span><span>15.6%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 31%; background: #d97706"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="bar-item-label">
+                <span>No Response</span><span>6.3%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 12.6%; background: #dc2626"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="bar-item-label">
+                <span>Damaged Item</span><span>4.5%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 9%; background: #7c3aed"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="bar-item-label">
+                <span>Other</span><span>3.6%</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 7.2%; background: #9ca3af"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Python · Azure · Power BI · Tableau · Claude API &nbsp;·&nbsp;
+      <a
+        href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+        target="_blank"
+        style="color: inherit; text-decoration: underline; opacity: 0.8"
+      >
+        Data: Olist Brazilian E-Commerce (Kaggle)
+      </a>
+    </footer>
+  </body>
+</html>
