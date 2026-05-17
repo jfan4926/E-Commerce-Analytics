@@ -50,6 +50,16 @@ def render():
             bg, tc, bc = "#eff6ff", "#1d4ed8", "#bfdbfe"
         else:
             bg, tc, bc = "#f3f4f6", "#6b7280", "#e5e7eb"
+
+        badge_html = ""
+        if title == "GitHub Actions CI":
+            badge_html = """
+            <div style="margin-top:0.8rem;">
+                <a href="https://github.com/jfan4926/E-Commerce-Analytics/actions" target="_blank">
+                    <img src="https://github.com/jfan4926/E-Commerce-Analytics/actions/workflows/ci.yml/badge.svg?branch=streamlit-deploy"/>
+                </a>
+            </div>"""
+
         col.markdown(f"""
         <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
                     border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">
@@ -59,20 +69,7 @@ def render():
                 {status}
             </span>
             <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
-            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}f'<div style="margin-top:0.8rem;">'
-f'<a href="https://github.com/jfan4926/E-Commerce-Analytics/actions" target="_blank">'
-f'<img src="https://github.com/jfan4926/E-Commerce-Analytics/actions/workflows/ci.yml/badge.svg?branch=streamlit-deploy"/>'
-f'</a></div>'</div>
+            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
+            {badge_html}
         </div>
         """, unsafe_allow_html=True)
-
-    st.markdown("**Star Schema**")
-    st.markdown("""
-    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:4px;
-                padding:1.5rem; font-family:monospace; font-size:0.82rem;
-                color:#6b7280; line-height:2.2; text-align:center;">
-        dim_customers<br/>│<br/>
-        dim_sellers ──── <strong style="color:#1a1a1a;">fact_orders</strong> ──── dim_products<br/>
-        │<br/>dim_date
-    </div>
-    """, unsafe_allow_html=True)
