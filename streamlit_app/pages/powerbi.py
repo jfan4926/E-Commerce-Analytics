@@ -1,18 +1,22 @@
 import streamlit as st
+import os
+
+# 图片在 streamlit_app/ 根目录，这里算出绝对路径
+IMG_DIR = os.path.join(os.path.dirname(__file__), "..")
 
 POWERBI_PAGES = [
     {
-        "img": "powerbi_page1.png",
+        "img": os.path.join(IMG_DIR, "powerbi_page1.png"),
         "title": "Executive Overview",
         "desc": "$15.42M GMV, 96K orders, monthly trend showing 2017 5x growth and a $1.55M Black Friday peak. Top 10 categories by GMV and review score side by side.",
     },
     {
-        "img": "powerbi_page2.png",
+        "img": os.path.join(IMG_DIR, "powerbi_page2.png"),
         "title": "Delivery & Satisfaction",
         "desc": "Orders delayed 3+ days see 1-star rates jump from 19% to 54%. Northern states (RR, AP, AM) average 25+ days vs the 12-day national average.",
     },
     {
-        "img": "powerbi_page3.png",
+        "img": os.path.join(IMG_DIR, "powerbi_page3.png"),
         "title": "AI-Powered Insights",
         "desc": "Claude API classifies 4,556 Portuguese reviews. Wrong/missing items (37%) surpass delivery delays as the top complaint — only discoverable through text analysis.",
     },
