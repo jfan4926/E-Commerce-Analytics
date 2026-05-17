@@ -74,12 +74,12 @@ def render():
 
     c1, c2 = st.columns(2)
     for i, item in enumerate(roadmap):
-        col     = c1 if i % 2 == 0 else c2
-        color   = item["color"]
-        status  = item["status"]
-        title   = item["title"]
-        desc    = item["desc"]
-        badge   = item["badge"]
+        col    = c1 if i % 2 == 0 else c2
+        color  = item["color"]
+        status = item["status"]
+        title  = item["title"]
+        desc   = item["desc"]
+        badge  = item["badge"]
 
         if color == "#16a34a":
             bg, tc, bc = "#f0fdf4", "#166534", "#bbf7d0"
@@ -90,18 +90,21 @@ def render():
 
         col.markdown(f"""
         <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
-                    border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
-                <span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;
-                             border-radius:2px; background:{bg}; color:{tc}; border:1px solid {bc};">
-                    {status}
-                </span>
-                {badge}
-            </div>
+                    border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:0.5rem;">
+            <span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;
+                         border-radius:2px; display:inline-block; margin-bottom:0.6rem;
+                         background:{bg}; color:{tc}; border:1px solid {bc};">
+                {status}
+            </span>
             <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
             <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
         </div>
         """, unsafe_allow_html=True)
+
+        if badge:
+            col.markdown(badge, unsafe_allow_html=True)
+
+        col.markdown("<div style='margin-bottom:0.8rem;'></div>", unsafe_allow_html=True)
 
     # Star Schema
     st.markdown("<br/>**Star Schema**", unsafe_allow_html=True)
