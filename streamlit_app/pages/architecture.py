@@ -51,25 +51,24 @@ def render():
         else:
             bg, tc, bc = "#f3f4f6", "#6b7280", "#e5e7eb"
 
-        badge_html = ""
+        col.markdown(f"""
+                <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
+                            border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">
+                    <span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;
+                                border-radius:2px; display:inline-block; margin-bottom:0.6rem;
+                                background:{bg}; color:{tc}; border:1px solid {bc};">
+                        {status}
+                    </span>
+                    <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
+                    <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
         if title == "GitHub Actions CI":
-            badge_html = """
-            <div style="margin-top:0.8rem;">
+            col.markdown("""
+            <div style="margin-top:-0.8rem; margin-bottom:1rem; padding:0 1.4rem;">
                 <a href="https://github.com/jfan4926/E-Commerce-Analytics/actions" target="_blank">
                     <img src="https://github.com/jfan4926/E-Commerce-Analytics/actions/workflows/ci.yml/badge.svg?branch=streamlit-deploy"/>
                 </a>
-            </div>"""
-
-        col.markdown(f"""
-        <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
-                    border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">
-            <span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;
-                         border-radius:2px; display:inline-block; margin-bottom:0.6rem;
-                         background:{bg}; color:{tc}; border:1px solid {bc};">
-                {status}
-            </span>
-            <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
-            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
-            {badge_html}
-        </div>
-        """, unsafe_allow_html=True)
+            </div>
+            """, unsafe_allow_html=True)
