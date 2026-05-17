@@ -4,7 +4,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from pages.ab_test import bayesian_ab_test
+from ab_testing.engine import bayesian_ab_test
 
 
 def test_b_clearly_better():
