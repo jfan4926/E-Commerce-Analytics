@@ -1,1 +1,6 @@
 streamlit_app/.streamlit/secrets.toml
+venv/
+__pycache__/
+*.pyc
+.env
+streamlit_app/.streamlit/secrets.toml
