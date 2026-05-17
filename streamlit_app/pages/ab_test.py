@@ -1,64 +1,31 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import time
-from sqlalchemy import create_engine, text
-import urllib
+# from sqlalchemy import create_engine, text  # uncomment for Azure SQL live connection
+# import urllib                                # uncomment for Azure SQL live connection
 
+import os
 
-@st.cache_data(ttl=3600)
+@st.cache_data
 def load_data():
-    cfg = st.secrets["azure_sql"]
-    conn_str = (
-        f"mssql+pyodbc://{cfg['username']}:"
-        f"{urllib.parse.quote_plus(cfg['password'])}"
-        f"@{cfg['server']}/{cfg['database']}"
-        f"?driver=ODBC+Driver+17+for+SQL+Server"
-    )
-    engine = create_engine(conn_str)
+    # ── Production: connect to Azure SQL ──────────────────────────────────
+    # cfg = st.secrets["azure_sql"]
+    # conn_str = (
+    #     f"mssql+pyodbc://{cfg['username']}:"
+    #     f"{urllib.parse.quote_plus(cfg['password'])}"
+    #     f"@{cfg['server']}/{cfg['database']}"
+    #     f"?driver=ODBC+Driver+17+for+SQL+Server"
+    # )
+    # engine = create_engine(conn_str)
+    # with engine.connect() as conn:
+    #     delay_df    = pd.read_sql(text("SELECT delay_bucket, COUNT(*) AS order_count, ..."), conn)
+    #     state_df    = pd.read_sql(text("SELECT c.state AS customer_state, ..."), conn)
+    #     category_df = pd.read_sql(text("SELECT p.category_english, ..."), conn)
+    # return delay_df, state_df, category_df
 
-    with engine.connect() as conn:
-
-        delay_df = pd.read_sql(text("""
-            SELECT
-                delay_bucket,
-                COUNT(*)                                                AS order_count,
-                AVG(CAST(review_score AS FLOAT))                        AS avg_score,
-                SUM(CASE WHEN review_score = 1 THEN 1.0 ELSE 0 END)
-                    / COUNT(*) * 100                                    AS pct_1star
-            FROM fact_orders
-            WHERE delay_bucket IS NOT NULL
-            GROUP BY delay_bucket
-            ORDER BY delay_bucket
-        """), conn)
-
-        state_df = pd.read_sql(text("""
-            SELECT
-                c.state                                                 AS customer_state,
-                COUNT(*)                                                AS orders,
-                AVG(CAST(f.delay_days AS FLOAT))                        AS avg_delay,
-                SUM(CASE WHEN f.is_delayed = 1 THEN 1.0 ELSE 0 END)
-                    / COUNT(*)                                          AS delay_rate
-            FROM fact_orders f
-            JOIN dim_customer c ON f.customer_key = c.customer_key
-            GROUP BY c.state
-        """), conn)
-
-        category_df = pd.read_sql(text("""
-            SELECT
-                p.category_english                                      AS product_category_name_english,
-                COUNT(*)                                                AS orders,
-                AVG(CAST(f.review_score AS FLOAT))                      AS avg_score,
-                SUM(CASE WHEN f.is_delayed = 1 THEN 1.0 ELSE 0 END)
-                    / COUNT(*)                                          AS delay_rate
-            FROM fact_orders f
-            JOIN dim_product p ON f.product_key = p.product_key
-            WHERE p.category_english IS NOT NULL
-            GROUP BY p.category_english
-        """), conn)
-
+    # ── Demo: load from local CSV (pre-exported from Azure SQL) ───────────
+    base = os.path.join(os.path.dirname(__file__), "..", "data")
+    delay_df    = pd.read_csv(os.path.join(base, "analysis_delay_vs_score.csv"))
+    state_df    = pd.read_csv(os.path.join(base, "analysis_state.csv"))
+    category_df = pd.read_csv(os.path.join(base, "analysis_category.csv"))
     return delay_df, state_df, category_df
-
 
 def build_experiments(delay_df, state_df, category_df):
     # Experiment 1: On-time vs Late
@@ -241,7 +208,8 @@ For example: **"99.9% chance that on-time delivery leads to more positive review
         experiments = build_experiments(delay_df, state_df, category_df)
         st.markdown(
             "<div style='font-size:0.78rem; color:#16a34a; margin-bottom:1.5rem;'>"
-            "✅ Live data from Azure SQL (olist-dw) · cached for 1 hour</div>",
+            "📁 Pre-exported from Azure SQL (olist-dw) · "
+"production version connects live to Azure SQL</div>",
             unsafe_allow_html=True,
         )
     except Exception as e:
