@@ -35,17 +35,21 @@ def render():
 
     roadmap = [
         ("dbt Core",          "Version-controlled SQL models with staging → marts layer and automated tests.", "#2563eb", "In Progress"),
-        ("GitHub Actions",    "CI/CD: runs `dbt build` + `pytest` on every PR automatically.",                "#2563eb", "In Progress"),
-        ("Text-to-SQL Agent", "Ask questions in plain English, get SQL results + plain-English explanations.", "#9ca3af", "Planned"),
+("GitHub Actions CI", 
+ "Automated pytest runs on every push — 5 unit tests validate the Bayesian A/B testing engine. Badge reflects live CI status.",
+ "#16a34a", "Live ✅"),        ("Text-to-SQL Agent", "Ask questions in plain English, get SQL results + plain-English explanations.", "#9ca3af", "Planned"),
         ("A/B Testing",       "Bayesian experiment framework — significance testing and posterior plots.",      "#9ca3af", "Planned"),
     ]
 
     c1, c2 = st.columns(2)
     for i, (title, desc, color, status) in enumerate(roadmap):
         col = c1 if i % 2 == 0 else c2
-        bg = "#eff6ff" if color == "#2563eb" else "#f3f4f6"
-        tc = "#1d4ed8" if color == "#2563eb" else "#6b7280"
-        bc = "#bfdbfe" if color == "#2563eb" else "#e5e7eb"
+        if color == "#16a34a":
+            bg, tc, bc = "#f0fdf4", "#166534", "#bbf7d0"
+        elif color == "#2563eb":
+            bg, tc, bc = "#eff6ff", "#1d4ed8", "#bfdbfe"
+        else:
+            bg, tc, bc = "#f3f4f6", "#6b7280", "#e5e7eb"
         col.markdown(f"""
         <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
                     border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">
@@ -55,7 +59,10 @@ def render():
                 {status}
             </span>
             <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
-            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
+            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}f'<div style="margin-top:0.8rem;">'
+f'<a href="https://github.com/jfan4926/E-Commerce-Analytics/actions" target="_blank">'
+f'<img src="https://github.com/jfan4926/E-Commerce-Analytics/actions/workflows/ci.yml/badge.svg?branch=streamlit-deploy"/>'
+f'</a></div>'</div>
         </div>
         """, unsafe_allow_html=True)
 
