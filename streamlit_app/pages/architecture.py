@@ -59,15 +59,15 @@ def render():
         {
             "title":  "Text-to-SQL Agent",
             "desc":   "Ask questions in plain English, get SQL results + plain-English explanations.",
-            "color":  "#9ca3af",
-            "status": "Planned",
+            "color":  "#2563eb",
+            "status": "In Progress",
             "badge":  "",
         },
         {
             "title":  "A/B Testing",
             "desc":   "Bayesian experiment framework — significance testing and posterior plots.",
-            "color":  "#9ca3af",
-            "status": "Planned",
+            "color":  "#16a34a",
+            "status": "Live ✅",
             "badge":  "",
         },
     ]
@@ -88,23 +88,26 @@ def render():
         else:
             bg, tc, bc = "#f3f4f6", "#6b7280", "#e5e7eb"
 
-        col.markdown(f"""
-        <div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;
-                    border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:0.5rem;">
-            <span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;
-                         border-radius:2px; display:inline-block; margin-bottom:0.6rem;
-                         background:{bg}; color:{tc}; border:1px solid {bc};">
-                {status}
-            </span>
-            <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>
-            <div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
+        status_row = (
+                f'<span style="font-family:monospace; font-size:0.65rem; padding:0.2rem 0.5rem;'
+                f'border-radius:2px; display:inline-block;'
+                f'background:{bg}; color:{tc}; border:1px solid {bc};">'
+                f'{status}</span>'
+            )
         if badge:
-            col.markdown(badge, unsafe_allow_html=True)
+            status_row += '&nbsp;&nbsp;' + badge
 
-        col.markdown("<div style='margin-bottom:0.8rem;'></div>", unsafe_allow_html=True)
+        col.markdown(
+            f'<div style="padding:1.2rem 1.4rem; border:1px solid #e5e7eb;'
+            f'border-top:3px solid {color}; border-radius:0 0 4px 4px; margin-bottom:1rem;">'
+            f'<div style="display:flex; align-items:center; margin-bottom:0.6rem;">{status_row}</div>'
+            f'<div style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem;">{title}</div>'
+            f'<div style="font-size:0.82rem; color:#4b5563; line-height:1.6;">{desc}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+    col.markdown("<div style='margin-bottom:0.8rem;'></div>", unsafe_allow_html=True)
 
     # Star Schema
     st.markdown("<br/>**Star Schema**", unsafe_allow_html=True)
