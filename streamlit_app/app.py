@@ -123,3 +123,23 @@ with tab_abtest:
 with tab_arch:
     from pages.architecture import render
     render()
+
+    # ── Footer ───────────────────────────────────────────────────────────────────
+st.markdown("<br/><br/>", unsafe_allow_html=True)
+st.markdown("""
+<div style="border-top:1px solid #e5e7eb; padding-top:1.2rem; margin-top:1rem;
+            font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:#9ca3af;
+            display:flex; justify-content:space-between; align-items:center;">
+    <span>
+        Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+               target="_blank" style="color:#9ca3af; text-decoration:underline;">
+               Olist Brazilian E-Commerce (Kaggle)</a>
+        &nbsp;·&nbsp;
+        For portfolio demonstration purposes only
+    </span>
+    <a href="https://github.com/jfan4926/E-Commerce-Analytics"
+       target="_blank" style="color:#9ca3af; text-decoration:underline;">
+        github.com/jfan4926
+    </a>
+</div>
+""", unsafe_allow_html=True)
