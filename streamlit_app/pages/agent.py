@@ -19,7 +19,16 @@ ORDER BY avg_review_score DESC;""",
             "Avg Review Score": [4.51, 4.43, 4.41, 4.38, 4.35],
             "Order Count":      [312, 874, 213, 567, 189],
         },
-        "insight": "📖 **Books and fashion categories** consistently outperform others, averaging above 4.4 stars. These categories likely benefit from lower complexity fulfillment and accurate product descriptions.",
+        "insight": "📖 Books and fashion categories consistently outperform others, averaging above 4.4 stars. These categories likely benefit from lower complexity fulfillment and accurate product descriptions.",
+"chart": {
+            "type": "bar",
+            "data": {
+                "Category": ["books_imported", "fashion_sport", "flowers", "arts_crafts", "audio"],
+                "Avg Review Score": [4.51, 4.43, 4.41, 4.38, 4.35]
+            },
+            "x": "Category",
+            "y": "Avg Review Score",
+        },
     },
     "What's the average delivery delay by Brazilian state?": {
         "sql": """SELECT
@@ -39,7 +48,12 @@ ORDER BY avg_delay_days DESC;""",
             "Avg Delay Days": [12.4, 10.1, 8.7, 7.2, 6.9],
             "Order Count":    [187, 243, 891, 1204, 673],
         },
-        "insight": "🗺️ **Northern states (RR, AP, AM)** experience the worst delays — up to 12 days past estimated delivery. This matches the geospatial view in the Dashboard tab and points to last-mile logistics gaps in remote regions.",
+        "insight": "🗺️ Northern states (RR, AP, AM) experience the worst delays — up to 12 days past estimated delivery. This matches the geospatial view in the Dashboard tab and points to last-mile logistics gaps in remote regions.",
+        "chart": {
+            "type": "bar",
+            "data": {"State": ["RR", "AP", "AM", "PA", "AL"], "Avg Delay Days": [12.4, 10.1, 8.7, 7.2, 6.9]},
+            "x": "State", "y": "Avg Delay Days",
+        },
     },
     "How do 1-star reviews correlate with delivery time?": {
         "sql": """SELECT
@@ -69,10 +83,15 @@ GROUP BY
     END
 ORDER BY pct_one_star;""",
         "table": {
-            "Delivery Bucket": ["0-7 days", "8-14 days", "15-21 days", "21+ days"],
+            "Delivery Bucket":  ["0-7 days", "8-14 days", "15-21 days", "21+ days"],
             "% 1-Star Reviews": [8.2, 15.7, 31.4, 54.1],
         },
-        "insight": "⚠️ **Clear threshold at 15+ days** — 1-star rates jump from 15% to 31% and continue climbing. Orders taking over 21 days are 6.6× more likely to receive a 1-star review than fast deliveries.",
+        "insight": "⚠️ Clear threshold at 15+ days — 1-star rates jump from 15% to 31% and continue climbing. Orders taking over 21 days are 6.6× more likely to receive a 1-star review than fast deliveries.",
+        "chart": {
+            "type": "bar",
+            "data": {"Delivery Bucket": ["0-7 days", "8-14 days", "15-21 days", "21+ days"], "% 1-Star Reviews": [8.2, 15.7, 31.4, 54.1]},
+            "x": "Delivery Bucket", "y": "% 1-Star Reviews",
+        },
     },
     "Which sellers have the most wrong item complaints?": {
         "sql": """SELECT TOP 5
@@ -86,12 +105,17 @@ WHERE o.complaint_category = 'wrong_or_missing_item'
 GROUP BY s.seller_id, s.seller_city, s.seller_state
 ORDER BY wrong_item_complaints DESC;""",
         "table": {
-            "Seller ID":   ["4a3ca...","6e31c...","1f29a...","8b72d...","2c98f..."],
-            "City":        ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador"],
-            "State":       ["SP", "RJ", "MG", "PR", "BA"],
-            "Complaints":  [47, 38, 29, 24, 21],
+            "Seller ID":  ["4a3ca...", "6e31c...", "1f29a...", "8b72d...", "2c98f..."],
+            "City":       ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador"],
+            "State":      ["SP", "RJ", "MG", "PR", "BA"],
+            "Complaints": [47, 38, 29, 24, 21],
         },
-        "insight": "🏪 **Top 5 sellers account for 159 wrong-item complaints** — a small number of sellers disproportionately drive fulfillment errors. Targeted seller quality intervention could significantly reduce this category.",
+        "insight": "🏪 Top 5 sellers account for 159 wrong-item complaints — a small number of sellers disproportionately drive fulfillment errors. Targeted seller quality intervention could significantly reduce this category.",
+        "chart": {
+            "type": "bar",
+            "data": {"City": ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador"], "Complaints": [47, 38, 29, 24, 21]},
+            "x": "City", "y": "Complaints",
+        },
     },
     "What was the peak sales month in 2017?": {
         "sql": """SELECT
@@ -103,14 +127,18 @@ WHERE YEAR(o.order_purchase_timestamp) = 2017
 GROUP BY FORMAT(o.order_purchase_timestamp, 'yyyy-MM')
 ORDER BY total_gmv DESC;""",
         "table": {
-            "Month":       ["2017-11", "2017-10", "2017-12", "2017-09", "2017-08"],
-            "Orders":      [7544, 6884, 6545, 6274, 5741],
-            "GMV ($)":     [1548320, 1401870, 1389440, 1287650, 1198320],
+            "Month":   ["2017-11", "2017-10", "2017-12", "2017-09", "2017-08"],
+            "Orders":  [7544, 6884, 6545, 6274, 5741],
+            "GMV ($)": [1548320, 1401870, 1389440, 1287650, 1198320],
         },
-        "insight": "🛍️ **November 2017 was the peak month** with $1.55M GMV — driven by Black Friday. October and December follow closely, confirming a strong Q4 seasonal pattern consistent with global e-commerce trends.",
+        "insight": "🛍️ November 2017 was the peak month with $1.55M GMV — driven by Black Friday. October and December follow closely, confirming a strong Q4 seasonal pattern consistent with global e-commerce trends.",
+        "chart": {
+            "type": "line",
+            "data": {"Month": ["2017-08", "2017-09", "2017-10", "2017-11", "2017-12"], "GMV ($)": [1198320, 1287650, 1401870, 1548320, 1389440]},
+            "x": "Month", "y": "GMV ($)",
+        },
     },
 }
-
 
 def render():
     st.markdown("""
@@ -170,18 +198,49 @@ def render():
         st.markdown("**Result**")
         if demo:
             import pandas as pd
-            st.dataframe(
-                pd.DataFrame(demo["table"]),
-                use_container_width=True,
-                hide_index=True,
-            )
-            st.markdown(
-                f"""<div style="margin-top:0.8rem; padding:0.9rem 1.2rem;
-                    background:#f0fdf4; border-left:3px solid #16a34a;
-                    border-radius:0 4px 4px 0; font-size:0.85rem; color:#166534;
-                    line-height:1.6;">{demo['insight']}</div>""",
+            df = pd.DataFrame(demo["table"])
+            st.dataframe(df, use_container_width=True, hide_index=True)
+
+            # ── Typewriter effect for insight ─────────────────────────────
+            insight_box = st.empty()
+            full_text   = demo["insight"]
+            displayed   = ""
+            for char in full_text:
+                displayed += char
+                insight_box.markdown(
+                    f"<div style='margin-top:0.8rem; padding:0.9rem 1.2rem;"
+                    f"background:#f0fdf4; border-left:3px solid #16a34a;"
+                    f"border-radius:0 4px 4px 0; font-size:0.85rem; color:#166534;"
+                    f"line-height:1.6;'>💡 {displayed}▌</div>",
+                    unsafe_allow_html=True,
+                )
+                time.sleep(0.018)
+            insight_box.markdown(
+                f"<div style='margin-top:0.8rem; padding:0.9rem 1.2rem;"
+                f"background:#f0fdf4; border-left:3px solid #16a34a;"
+                f"border-radius:0 4px 4px 0; font-size:0.85rem; color:#166534;"
+                f"line-height:1.6;'>💡 {full_text}</div>",
                 unsafe_allow_html=True,
             )
+
+            # ── Chart ─────────────────────────────────────────────────────
+            chart_data = demo.get("chart")
+            if chart_data:
+                st.markdown("<br/>**Visualisation**", unsafe_allow_html=True)
+                chart_df = pd.DataFrame({
+                    chart_data["x"]: chart_data["data"][chart_data["x"]],
+                    chart_data["y"]: chart_data["data"][chart_data["y"]],
+                })
+                if chart_data["type"] == "bar":
+                    st.bar_chart(
+                        chart_df.set_index(chart_data["x"])[chart_data["y"]],
+                        color="#2563eb",
+                    )
+                elif chart_data["type"] == "line":
+                    st.line_chart(
+                        chart_df.set_index(chart_data["x"])[chart_data["y"]],
+                        color="#2563eb",
+                    )
         else:
             st.info("Try one of the example questions above to see a full demo.")
 
