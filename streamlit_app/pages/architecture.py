@@ -112,11 +112,49 @@ def render():
     # Star Schema
     st.markdown("<br/>**Star Schema**", unsafe_allow_html=True)
     st.markdown("""
-    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:4px;
-                padding:1.5rem; font-family:monospace; font-size:0.82rem;
-                color:#6b7280; line-height:2.2; text-align:center;">
-        dim_customers<br/>│<br/>
-        dim_sellers ──── <strong style="color:#1a1a1a;">fact_orders</strong> ──── dim_products<br/>
-        │<br/>dim_date
+    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:4px; padding:1.2rem;">
+        <div style="font-size:0.78rem; color:#6b7280; margin-bottom:0.8rem; font-family:monospace;">
+            1 fact table · 4 dimension tables
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.4rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span style="background:#dbeafe; color:#1d4ed8; font-family:monospace;
+                             font-size:0.8rem; padding:0.3rem 0.7rem; border-radius:3px;
+                             border:1px solid #bfdbfe; font-weight:600;">
+                    fact_orders
+                </span>
+                <span style="font-size:0.75rem; color:#9ca3af;">central fact table</span>
+            </div>
+            <div style="margin-left:1rem; display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem;">
+                <div style="font-size:0.78rem; color:#6b7280;">
+                    <span style="color:#9ca3af; font-family:monospace;">├─</span>
+                    <span style="background:#f3f4f6; padding:0.15rem 0.5rem; border-radius:3px;
+                                 font-family:monospace; font-size:0.75rem; margin-left:0.3rem;">
+                        dim_customer
+                    </span>
+                </div>
+                <div style="font-size:0.78rem; color:#6b7280;">
+                    <span style="color:#9ca3af; font-family:monospace;">├─</span>
+                    <span style="background:#f3f4f6; padding:0.15rem 0.5rem; border-radius:3px;
+                                 font-family:monospace; font-size:0.75rem; margin-left:0.3rem;">
+                        dim_product
+                    </span>
+                </div>
+                <div style="font-size:0.78rem; color:#6b7280;">
+                    <span style="color:#9ca3af; font-family:monospace;">├─</span>
+                    <span style="background:#f3f4f6; padding:0.15rem 0.5rem; border-radius:3px;
+                                 font-family:monospace; font-size:0.75rem; margin-left:0.3rem;">
+                        dim_seller
+                    </span>
+                </div>
+                <div style="font-size:0.78rem; color:#6b7280;">
+                    <span style="color:#9ca3af; font-family:monospace;">└─</span>
+                    <span style="background:#f3f4f6; padding:0.15rem 0.5rem; border-radius:3px;
+                                 font-family:monospace; font-size:0.75rem; margin-left:0.3rem;">
+                        dim_date
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
