@@ -254,3 +254,14 @@ def render():
 4. **Execution** — query runs against Azure SQL via SQLAlchemy
 5. **Interpretation** — Claude summarises the result in plain English
         """)
+
+    with st.expander("View prompt sent to Claude API"):
+        st.code('''{
+  "model": "claude-sonnet-4-20250514",
+  "max_tokens": 1000,
+  "system": "You are a SQL expert. Given a database schema and a question, return only a valid SQL query with no explanation.",
+  "messages": [{
+    "role": "user",
+    "content": "Schema:\\n\\nfact_orders(order_id, customer_key, product_key, seller_key, price, freight_value, total_payment, payment_type, review_score, delivery_days, estimated_days, delay_days, is_delayed, delay_bucket, purchase_year, purchase_month)\\n\\ndim_customer(customer_key, customer_unique_id, city, state, zip_code)\\n\\ndim_product(product_key, category_english, weight_g)\\n\\ndim_seller(seller_key, city, state, zip_code)\\n\\ndim_date(date_key, full_date, year, quarter, month, month_name)\\n\\nQuestion: What is the average delivery delay by Brazilian state?\\n\\nReturn SQL only."
+  }]
+}''', language="json")
